@@ -4,197 +4,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Flight Search</title>
+<title>SMART FLIGHT SEARCH</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:#f1f5fb;color:#15375f;
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5fb;
-  color: #15375f;
+header{
+  background:#153f73;color:white;padding:22px 6%;
 }
-
-header {
-  background: #153f73;
-  color: white;
-  padding: 22px 6%;
+header h1{margin:0;font-size:29px}
+header p{margin-bottom:0}
+.hero{
+  background:linear-gradient(110deg,#174779,#0876ce);
+  color:white;text-align:center;padding:55px 15px 110px;
 }
-
-header h1 {
-  margin: 0;
-  font-size: 30px;
+.hero h2{font-size:36px;margin:15px 0}
+.container{
+  max-width:1200px;margin:-65px auto 50px;
+  padding:35px;background:white;border-radius:17px;
+  box-shadow:0 8px 30px #00000012;position:relative;
 }
-
-header p {
-  margin-bottom: 0;
+h3{font-size:24px;margin-top:0}
+.grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:22px;
 }
-
-.hero {
-  background: linear-gradient(110deg,#174779,#0876ce);
-  color: white;
-  text-align: center;
-  padding: 55px 15px 110px;
+.field{position:relative;margin-bottom:20px}
+label{display:block;font-weight:bold;margin-bottom:9px}
+input,select{
+  width:100%;padding:16px;border:1px solid #cbd8e8;
+  border-radius:10px;font-size:16px;background:white;
+  color:#183957;
 }
-
-.hero h2 {
-  font-size: 36px;
-  margin: 15px 0;
+input:focus,select:focus{
+  outline:2px solid #1680d7;border-color:#1680d7;
 }
-
-.container {
-  max-width: 1200px;
-  margin: -65px auto 50px;
-  padding: 35px;
-  background: white;
-  border-radius: 17px;
-  box-shadow: 0 8px 30px #00000012;
-  position: relative;
+.help{font-size:12px;color:#647b96;margin-top:7px}
+.suggestions{
+  position:absolute;top:100%;left:0;right:0;
+  background:white;z-index:20;border:1px solid #ccd8e6;
+  border-radius:9px;max-height:320px;overflow-y:auto;
+  box-shadow:0 7px 20px #0002;
 }
-
-h3 {
-  font-size: 24px;
-  margin-top: 0;
+.suggestions button{
+  display:block;width:100%;text-align:left;padding:13px;
+  background:white;border:none;border-bottom:1px solid #eee;
+  cursor:pointer;color:#183957;font-size:14px;
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
+.suggestions button:hover{background:#eaf4ff}
+.suggestions small{
+  display:block;color:#71849a;margin-top:4px;
 }
-
-.field {
-  position: relative;
-  margin-bottom: 20px;
+.search-button{
+  width:100%;padding:19px;background:#0877d1;
+  color:white;border:none;border-radius:10px;
+  font-size:19px;font-weight:bold;cursor:pointer;margin-top:8px;
 }
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 9px;
+.search-button:hover{background:#075da9}
+.result{
+  display:none;background:#f5f9ff;border:1px solid #cbdff5;
+  border-radius:12px;padding:22px;margin-top:25px;line-height:1.9;
 }
-
-input, select {
-  width: 100%;
-  padding: 16px;
-  border: 1px solid #cbd8e8;
-  border-radius: 10px;
-  font-size: 16px;
-  background: white;
-  color: #183957;
+.status{
+  margin-top:18px;padding:13px;background:#eef5fc;
+  border-radius:8px;font-size:13px;
 }
-
-input:focus, select:focus {
-  outline: 2px solid #1680d7;
-  border-color: #1680d7;
-}
-
-.help {
-  font-size: 12px;
-  color: #647b96;
-  margin-top: 7px;
-}
-
-.suggestions {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  z-index: 20;
-  border: 1px solid #ccd8e6;
-  border-radius: 9px;
-  max-height: 300px;
-  overflow-y: auto;
-  box-shadow: 0 7px 20px #0002;
-}
-
-.suggestions button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 13px;
-  background: white;
-  border: none;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-  color: #183957;
-  font-size: 14px;
-}
-
-.suggestions button:hover {
-  background: #eaf4ff;
-}
-
-.suggestions small {
-  display: block;
-  color: #71849a;
-  margin-top: 4px;
-}
-
-.search-button {
-  width: 100%;
-  padding: 19px;
-  background: #0877d1;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 19px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
-.search-button:hover {
-  background: #075da9;
-}
-
-.result {
-  display: none;
-  background: #f5f9ff;
-  border: 1px solid #cbdff5;
-  border-radius: 12px;
-  padding: 22px;
-  margin-top: 25px;
-  line-height: 1.9;
-}
-
-.status {
-  margin-top: 18px;
-  padding: 13px;
-  background: #eef5fc;
-  border-radius: 8px;
-  font-size: 13px;
-}
-
-footer {
-  text-align: center;
-  color: #70849b;
-  padding: 25px;
-  font-size: 13px;
-}
-
-@media(max-width:700px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .container {
-    margin: -55px 12px 30px;
-    padding: 22px;
-  }
-
-  .hero h2 {
-    font-size: 27px;
-  }
-
-  header h1 {
-    font-size: 23px;
-  }
+footer{text-align:center;color:#70849b;padding:25px;font-size:13px}
+a{color:#0877d1;font-weight:bold}
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr;gap:0}
+  .container{margin:-55px 12px 30px;padding:22px}
+  .hero h2{font-size:27px}
+  header h1{font-size:23px}
 }
 </style>
 </head>
@@ -221,24 +104,20 @@ footer {
 
   <div class="field">
     <label for="origin">Origem</label>
-    <input id="origin"
-      type="text"
-      placeholder="Digite cidade, aeroporto ou código IATA"
-      autocomplete="off"
-      required>
+    <input id="origin" type="text"
+      placeholder="Cidade, aeroporto ou código IATA"
+      autocomplete="off" required>
     <div id="originList" class="suggestions"></div>
-    <div class="help">Digite pelo menos 2 letras e selecione um aeroporto.</div>
+    <div class="help">Digite e selecione um aeroporto na lista.</div>
   </div>
 
   <div class="field">
     <label for="destination">Destino</label>
-    <input id="destination"
-      type="text"
-      placeholder="Digite cidade, aeroporto ou código IATA"
-      autocomplete="off"
-      required>
+    <input id="destination" type="text"
+      placeholder="Cidade, aeroporto ou código IATA"
+      autocomplete="off" required>
     <div id="destinationList" class="suggestions"></div>
-    <div class="help">Aeroportos comerciais com serviço aéreo regular.</div>
+    <div class="help">Aeroportos comerciais do mundo inteiro.</div>
   </div>
 
   <div class="field">
@@ -256,7 +135,7 @@ footer {
 
   <div class="field" id="returnField">
     <label for="returnDate">Data de volta</label>
-    <input type="date" id="returnDate">
+    <input type="date" id="returnDate" required>
   </div>
 
   <div class="field">
@@ -295,138 +174,146 @@ footer {
 <div id="result" class="result"></div>
 
 <div id="status" class="status">
-  Carregando base mundial de aeroportos...
+  Carregando aeroportos mundiais...
 </div>
 
 </main>
 
 <footer>
-  SMART FLIGHT SEARCH © 2026
-  <br>
-  Pesquisa mundial de aeroportos comerciais.
+SMART FLIGHT SEARCH © 2026
+<br>Pesquisa mundial de aeroportos comerciais.
 </footer>
 
 <script>
 
 // ======================================
-// 1. BASE MUNDIAL DE AEROPORTOS
+// 1. BASE DE AEROPORTOS
 // ======================================
 
 const AIRPORTS_URL =
 "https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv";
 
-let airports = [];
-let selectedOrigin = null;
-let selectedDestination = null;
-let airportsReady = false;
+let airports=[];
+let airportsReady=false;
 
-const allowedTypes = new Set([
-  "large_airport",
-  "medium_airport",
-  "small_airport"
-]);
-
-const countryNames = new Intl.DisplayNames(
-  ["pt-BR"],
-  { type: "region" }
+const countryNames=new Intl.DisplayNames(
+  ["pt-BR"],{type:"region"}
 );
 
-// Aeroportos metropolitanos.
-// Permite encontrar aeroportos secundários
-// quando a pessoa pesquisa pela cidade principal.
+// ======================================
+// 2. AEROPORTOS METROPOLITANOS
+// ======================================
 
-const metroAirports = {
-  tokyo: ["HND", "NRT"],
-  london: ["LHR", "LGW", "STN", "LTN", "LCY"],
-  paris: ["CDG", "ORY"],
-  newyork: ["JFK", "LGA", "EWR"],
-  saopaulo: ["GRU", "CGH", "VCP"],
-  rio: ["GIG", "SDU"],
-  rome: ["FCO", "CIA"],
-  milan: ["MXP", "LIN", "BGY"],
-  moscow: ["SVO", "DME", "VKO"],
-  istanbul: ["IST", "SAW"],
-  buenosaires: ["EZE", "AEP"],
-  washington: ["IAD", "DCA", "BWI"],
-  losangeles: ["LAX", "BUR", "LGB", "SNA"],
-  sanfrancisco: ["SFO", "OAK", "SJC"],
-  chicago: ["ORD", "MDW"],
-  shanghai: ["PVG", "SHA"],
-  beijing: ["PEK", "PKX"],
-  seoul: ["ICN", "GMP"],
-  osaka: ["KIX", "ITM"],
-  dubai: ["DXB", "DWC"]
+const metroAirports={
+  tokyo:["HND","NRT"],
+  toquio:["HND","NRT"],
+  tokio:["HND","NRT"],
+  london:["LHR","LGW","STN","LTN","LCY"],
+  londres:["LHR","LGW","STN","LTN","LCY"],
+  paris:["CDG","ORY"],
+  newyork:["JFK","LGA","EWR"],
+  saopaulo:["GRU","CGH","VCP"],
+  riodejaneiro:["GIG","SDU"],
+  buenosaires:["EZE","AEP"],
+  rome:["FCO","CIA"],
+  milan:["MXP","LIN","BGY"],
+  istanbul:["IST","SAW"],
+  washington:["IAD","DCA","BWI"],
+  losangeles:["LAX","BUR","LGB","SNA"],
+  sanfrancisco:["SFO","OAK","SJC"],
+  chicago:["ORD","MDW"],
+  shanghai:["PVG","SHA"],
+  beijing:["PEK","PKX"],
+  seoul:["ICN","GMP"],
+  osaka:["KIX","ITM"],
+  dubai:["DXB","DWC"]
 };
 
 // ======================================
-// 2. NORMALIZAR TEXTO
+// 3. AEROPORTOS GARANTIDOS DE TÓQUIO
 // ======================================
 
-function normalize(value) {
-  return String(value || "")
+const tokyoAirports=[
+  {
+    name:"Tokyo Haneda International Airport",
+    city:"Tokyo",
+    country:"Japão",
+    countryCode:"JP",
+    iata:"HND",
+    icao:"RJTT",
+    type:"large_airport",
+    keywords:"Tokyo Haneda Tokio Tóquio"
+  },
+  {
+    name:"Narita International Airport",
+    city:"Narita",
+    country:"Japão",
+    countryCode:"JP",
+    iata:"NRT",
+    icao:"RJAA",
+    type:"large_airport",
+    keywords:"Tokyo Narita Tokio Tóquio"
+  }
+];
+
+// ======================================
+// 4. NORMALIZAÇÃO
+// ======================================
+
+function normalize(value){
+  return String(value||"")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u0300-\u036f]/g,"")
     .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
+    .replace(/[^a-z0-9]/g,"");
 }
 
 // ======================================
-// 3. LEITOR DE CSV
+// 5. LEITOR DE CSV
 // ======================================
 
-function parseCSV(text) {
+function parseCSV(text){
 
-  const rows = [];
-  let row = [];
-  let value = "";
-  let quoted = false;
+  const rows=[];
+  let row=[];
+  let value="";
+  let quoted=false;
 
-  for (let i = 0; i < text.length; i++) {
+  for(let i=0;i<text.length;i++){
 
-    const char = text[i];
-    const next = text[i + 1];
+    const char=text[i];
+    const next=text[i+1];
 
-    if (char === '"') {
-
-      if (quoted && next === '"') {
-        value += '"';
+    if(char==='"'){
+      if(quoted&&next==='"'){
+        value+='"';
         i++;
-      } else {
-        quoted = !quoted;
+      }else{
+        quoted=!quoted;
       }
-
-    } else if (char === "," && !quoted) {
-
+    }else if(char===","&&!quoted){
       row.push(value);
-      value = "";
+      value="";
+    }else if((char==="\n"||char==="\r")&&!quoted){
 
-    } else if (
-      (char === "\n" || char === "\r") && !quoted
-    ) {
-
-      if (char === "\r" && next === "\n") {
-        i++;
-      }
+      if(char==="\r"&&next==="\n")i++;
 
       row.push(value);
 
-      if (row.some(item => item.trim() !== "")) {
+      if(row.some(v=>v.trim()!=="")){
         rows.push(row);
       }
 
-      row = [];
-      value = "";
-
-    } else {
-
-      value += char;
-
+      row=[];
+      value="";
+    }else{
+      value+=char;
     }
   }
 
   row.push(value);
 
-  if (row.some(item => item.trim() !== "")) {
+  if(row.some(v=>v.trim()!=="")){
     rows.push(row);
   }
 
@@ -434,530 +321,526 @@ function parseCSV(text) {
 }
 
 // ======================================
-// 4. CARREGAR AEROPORTOS
+// 6. CARREGAR AEROPORTOS
 // ======================================
 
-async function loadAirports() {
+async function loadAirports(){
 
-  const status = document.getElementById("status");
+  const status=document.getElementById("status");
 
-  try {
+  try{
 
-    const response = await fetch(AIRPORTS_URL);
+    const response=await fetch(AIRPORTS_URL);
 
-    if (!response.ok) {
-      throw new Error("Não foi possível acessar a base.");
+    if(!response.ok){
+      throw new Error("Falha ao carregar aeroportos");
     }
 
-    const csv = await response.text();
-    const rows = parseCSV(csv);
+    const csv=await response.text();
+    const rows=parseCSV(csv);
 
-    const headers = rows[0].map(
-      item => item.trim().replace(/^\uFEFF/, "")
+    const headers=rows[0].map(
+      v=>v.trim().replace(/^\uFEFF/,"")
     );
 
-    const index = {};
+    const index={};
 
-    headers.forEach((name, i) => {
-      index[name] = i;
+    headers.forEach((name,i)=>{
+      index[name]=i;
     });
 
-    const required = [
-      "type",
-      "name",
-      "municipality",
-      "iso_country",
-      "scheduled_service",
-      "iata_code",
-      "icao_code"
+    const required=[
+      "type","name","municipality","iso_country",
+      "scheduled_service","iata_code","icao_code"
     ];
 
-    for (const field of required) {
-      if (index[field] === undefined) {
-        throw new Error("Campo ausente na base: " + field);
+    required.forEach(field=>{
+      if(index[field]===undefined){
+        throw new Error("Coluna ausente: "+field);
       }
-    }
+    });
 
-    const unique = new Set();
+    const unique=new Set();
 
-    airports = [];
+    airports=[];
 
-    for (let i = 1; i < rows.length; i++) {
+    for(let i=1;i<rows.length;i++){
 
-      const row = rows[i];
+      const row=rows[i];
 
-      const type = row[index.type];
-      const scheduled = row[index.scheduled_service];
-      const iata = (row[index.iata_code] || "").trim();
+      const type=row[index.type];
+      const scheduled=row[index.scheduled_service];
+      const iata=(row[index.iata_code]||"").trim();
 
-      if (!allowedTypes.has(type)) continue;
-      if (scheduled !== "yes") continue;
-      if (!iata || iata.length !== 3) continue;
-      if (unique.has(iata)) continue;
+      if(!["large_airport","medium_airport","small_airport"].includes(type))continue;
+      if(scheduled!=="yes")continue;
+      if(!iata||iata.length!==3)continue;
+      if(unique.has(iata))continue;
 
       unique.add(iata);
 
-      const countryCode = row[index.iso_country] || "";
+      const countryCode=row[index.iso_country]||"";
 
-      let country = countryCode;
+      let country=countryCode;
 
-      try {
-        country = countryNames.of(countryCode);
-      } catch (e) {}
+      try{
+        country=countryNames.of(countryCode);
+      }catch(e){}
 
       airports.push({
-
-        name: row[index.name] || "",
-        city: row[index.municipality] || "",
-        country: country,
-        countryCode: countryCode,
-        iata: iata,
-        icao: row[index.icao_code] || "",
-        type: type,
-        keywords: row[index.keywords] || ""
-
+        name:row[index.name]||"",
+        city:row[index.municipality]||"",
+        country:country,
+        countryCode:countryCode,
+        iata:iata,
+        icao:row[index.icao_code]||"",
+        type:type,
+        keywords:index.keywords!==undefined
+          ?row[index.keywords]||""
+          :""
       });
     }
 
-    airports.sort((a, b) =>
-      a.city.localeCompare(b.city)
-    );
+    // Inclui os aeroportos prioritários caso
+    // a base externa não os tenha retornado.
 
-    airportsReady = true;
+    tokyoAirports.forEach(special=>{
+      const existing=airports.find(
+        a=>a.iata===special.iata
+      );
 
-    status.textContent =
-      "Base carregada com sucesso: " +
-      airports.length.toLocaleString("pt-BR") +
-      " aeroportos comerciais com voos regulares.";
+      if(!existing){
+        airports.push(special);
+      }
+    });
 
-  } catch (error) {
+    airportsReady=true;
+
+    status.textContent=
+      "Base mundial carregada: "+
+      airports.length.toLocaleString("pt-BR")+
+      " aeroportos.";
+
+  }catch(error){
 
     console.error(error);
 
-    status.textContent =
-      "Erro ao carregar aeroportos. Verifique sua conexão e atualize a página.";
+    // Mesmo sem internet, os dois aeroportos
+    // principais de Tóquio continuam disponíveis.
 
+    airports=tokyoAirports.slice();
+    airportsReady=true;
+
+    status.textContent=
+      "Base externa indisponível. Aeroportos prioritários disponíveis. Verifique sua conexão.";
   }
 }
 
 // ======================================
-// 5. PESQUISA DE AEROPORTOS
+// 7. PESQUISA DE AEROPORTOS
 // ======================================
 
-function searchAirports(query) {
+function searchAirports(query){
 
-  const q = normalize(query);
+  const q=normalize(query);
 
-  if (q.length < 2) return [];
+  if(q.length<2)return [];
 
-  const metroCodes = metroAirports[q] || [];
+  const results=new Map();
 
-  const results = [];
+  const metroCodes=metroAirports[q]||[];
 
-  for (const airport of airports) {
+  // Pesquisa na base mundial
 
-    const city = normalize(airport.city);
-    const name = normalize(airport.name);
-    const country = normalize(airport.country);
-    const iata = normalize(airport.iata);
-    const icao = normalize(airport.icao);
-    const keywords = normalize(airport.keywords);
+  for(const airport of airports){
 
-    const searchable = [
-      city,
-      name,
-      country,
-      iata,
-      icao,
-      keywords
-    ].join(" ");
+    const searchable=normalize([
+      airport.city,
+      airport.name,
+      airport.country,
+      airport.countryCode,
+      airport.iata,
+      airport.icao,
+      airport.keywords
+    ].join(" "));
 
-    const metroMatch = metroCodes.includes(airport.iata);
-
-    if (
-      searchable.includes(q) ||
-      metroMatch
-    ) {
-
-      let score = 0;
-
-      if (iata === q) score += 100;
-      if (city === q) score += 80;
-      if (name.startsWith(q)) score += 60;
-      if (city.startsWith(q)) score += 50;
-      if (metroMatch) score += 45;
-
-      results.push({
-        airport,
-        score
-      });
+    if(searchable.includes(q)){
+      results.set(airport.iata,airport);
     }
   }
 
-  results.sort((a, b) =>
-    b.score - a.score ||
-    a.airport.city.localeCompare(b.airport.city)
-  );
+  // Inclui aeroportos metropolitanos
 
-  return results
-    .slice(0, 30)
-    .map(item => item.airport);
+  if(metroCodes.length){
+
+    metroCodes.forEach(code=>{
+
+      const airport=airports.find(
+        a=>a.iata===code
+      );
+
+      if(airport){
+        results.set(code,airport);
+      }
+    });
+  }
+
+  // Proteção especial para Tóquio
+
+  const isTokyo=
+    q.includes("tokyo")||
+    q.includes("toquio")||
+    q.includes("tokio");
+
+  if(isTokyo){
+
+    tokyoAirports.forEach(airport=>{
+      results.set(airport.iata,airport);
+    });
+  }
+
+  // Pesquisa direta por Narita
+
+  if(q.includes("narita")||q==="nrt"){
+    results.set("NRT",tokyoAirports[1]);
+  }
+
+  // Pesquisa direta por Haneda
+
+  if(q.includes("haneda")||q==="hnd"){
+    results.set("HND",tokyoAirports[0]);
+  }
+
+  const list=Array.from(results.values());
+
+  list.sort((a,b)=>{
+
+    const aExact=normalize(a.iata)===q?0:1;
+    const bExact=normalize(b.iata)===q?0:1;
+
+    if(aExact!==bExact)return aExact-bExact;
+
+    return a.name.localeCompare(b.name);
+  });
+
+  return list.slice(0,30);
 }
 
 // ======================================
-// 6. EXIBIR SUGESTÕES
+// 8. EXIBIR SUGESTÕES
 // ======================================
 
-function airportLabel(airport) {
+function airportLabel(airport){
 
   return (
-    (airport.city || airport.name) +
-    " — " +
-    airport.name +
-    " (" + airport.iata + ")"
+    (airport.city||airport.name)+
+    " — "+airport.name+
+    " ("+airport.iata+")"
   );
 }
 
-function showSuggestions(input, list, side) {
+function showSuggestions(input,list,side){
 
-  const query = input.value.trim();
+  const query=input.value.trim();
 
-  list.innerHTML = "";
+  list.innerHTML="";
 
-  if (query.length < 2 || !airportsReady) {
+  if(query.length<2||!airportsReady)return;
+
+  const results=searchAirports(query);
+
+  if(!results.length){
+
+    const button=document.createElement("button");
+    button.type="button";
+    button.textContent="Nenhum aeroporto encontrado.";
+
+    list.appendChild(button);
     return;
   }
 
-  const results = searchAirports(query);
+  results.forEach(airport=>{
 
-  if (!results.length) {
+    const button=document.createElement("button");
+    button.type="button";
 
-    list.innerHTML =
-      '<button type="button" disabled>' +
-      'Nenhum aeroporto encontrado.' +
-      '</button>';
+    const title=document.createElement("strong");
+    title.textContent=airportLabel(airport);
 
-    return;
-  }
+    const details=document.createElement("small");
+    details.textContent=
+      airport.country+
+      " | IATA: "+airport.iata+
+      " | ICAO: "+airport.icao;
 
-  results.forEach(airport => {
+    button.append(title,details);
 
-    const button = document.createElement("button");
-
-    button.type = "button";
-
-    const title = document.createElement("strong");
-    title.textContent = airportLabel(airport);
-
-    const details = document.createElement("small");
-    details.textContent =
-      airport.country +
-      " | Código IATA: " + airport.iata +
-      " | " + airport.type.replace("_", " ");
-
-    button.appendChild(title);
-    button.appendChild(details);
-
-    button.addEventListener("mousedown", event => {
+    button.addEventListener("mousedown",event=>{
       event.preventDefault();
     });
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click",()=>{
 
-      input.value = airportLabel(airport);
+      input.value=airportLabel(airport);
 
-      if (side === "origin") {
-        selectedOrigin = airport;
-      } else {
-        selectedDestination = airport;
+      if(side==="origin"){
+        selectedOrigin=airport;
+      }else{
+        selectedDestination=airport;
       }
 
-      list.innerHTML = "";
-
+      list.innerHTML="";
     });
 
     list.appendChild(button);
-
   });
 }
 
 // ======================================
-// 7. CONFIGURAR CAMPOS DE AEROPORTOS
+// 9. CONFIGURAR ORIGEM E DESTINO
 // ======================================
 
-const originInput = document.getElementById("origin");
-const destinationInput = document.getElementById("destination");
+let selectedOrigin=null;
+let selectedDestination=null;
 
-const originList = document.getElementById("originList");
-const destinationList = document.getElementById("destinationList");
+const originInput=document.getElementById("origin");
+const destinationInput=document.getElementById("destination");
 
-originInput.addEventListener("input", () => {
+const originList=document.getElementById("originList");
+const destinationList=document.getElementById("destinationList");
 
-  selectedOrigin = null;
-
-  showSuggestions(
-    originInput,
-    originList,
-    "origin"
-  );
-
+originInput.addEventListener("input",()=>{
+  selectedOrigin=null;
+  showSuggestions(originInput,originList,"origin");
 });
 
-destinationInput.addEventListener("input", () => {
-
-  selectedDestination = null;
-
-  showSuggestions(
-    destinationInput,
-    destinationList,
-    "destination"
-  );
-
+destinationInput.addEventListener("input",()=>{
+  selectedDestination=null;
+  showSuggestions(destinationInput,destinationList,"destination");
 });
 
-originInput.addEventListener("focus", () => {
-  showSuggestions(originInput, originList, "origin");
+originInput.addEventListener("focus",()=>{
+  showSuggestions(originInput,originList,"origin");
 });
 
-destinationInput.addEventListener("focus", () => {
-  showSuggestions(destinationInput, destinationList, "destination");
+destinationInput.addEventListener("focus",()=>{
+  showSuggestions(destinationInput,destinationList,"destination");
 });
 
-document.addEventListener("click", event => {
+document.addEventListener("click",event=>{
 
-  if (!event.target.closest("#origin") &&
-      !event.target.closest("#originList")) {
-    originList.innerHTML = "";
+  if(!event.target.closest("#origin")&&
+     !event.target.closest("#originList")){
+    originList.innerHTML="";
   }
 
-  if (!event.target.closest("#destination") &&
-      !event.target.closest("#destinationList")) {
-    destinationList.innerHTML = "";
+  if(!event.target.closest("#destination")&&
+     !event.target.closest("#destinationList")){
+    destinationList.innerHTML="";
   }
-
 });
 
 // ======================================
-// 8. SOMENTE IDA / IDA E VOLTA
+// 10. TIPO DE VIAGEM
 // ======================================
 
-const tripType = document.getElementById("tripType");
-const returnField = document.getElementById("returnField");
-const returnDate = document.getElementById("returnDate");
-const departure = document.getElementById("departure");
+const tripType=document.getElementById("tripType");
+const returnField=document.getElementById("returnField");
+const returnDate=document.getElementById("returnDate");
+const departure=document.getElementById("departure");
 
-function updateTripType() {
+function updateTripType(){
 
-  const oneWay = tripType.value === "oneway";
+  const oneWay=tripType.value==="oneway";
 
-  returnField.style.display = oneWay ? "none" : "block";
+  returnField.style.display=oneWay?"none":"block";
+  returnDate.required=!oneWay;
 
-  returnDate.required = !oneWay;
-
-  if (oneWay) {
-    returnDate.value = "";
+  if(oneWay){
+    returnDate.value="";
   }
-
 }
 
-tripType.addEventListener("change", updateTripType);
-
+tripType.addEventListener("change",updateTripType);
 updateTripType();
 
 // ======================================
-// 9. DATAS MÍNIMAS
+// 11. DATAS
 // ======================================
 
-function localToday() {
+function localToday(){
 
-  const now = new Date();
+  const now=new Date();
 
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
+  return [
+    now.getFullYear(),
+    String(now.getMonth()+1).padStart(2,"0"),
+    String(now.getDate()).padStart(2,"0")
+  ].join("-");
 }
 
-const today = localToday();
+const today=localToday();
 
-departure.min = today;
-returnDate.min = today;
+departure.min=today;
+returnDate.min=today;
 
-departure.addEventListener("change", () => {
+departure.addEventListener("change",()=>{
 
-  returnDate.min = departure.value || today;
+  returnDate.min=departure.value||today;
 
-  if (
-    returnDate.value &&
-    returnDate.value < departure.value
-  ) {
-    returnDate.value = "";
+  if(returnDate.value&&returnDate.value<departure.value){
+    returnDate.value="";
   }
-
 });
 
-// ======================================
-// 10. FORMATAÇÃO DAS DATAS
-// ======================================
+function formatDate(date){
 
-function formatDate(date) {
+  if(!date)return "";
 
-  if (!date) return "";
+  const parts=date.split("-");
 
-  const parts = date.split("-");
-
-  return parts[2] + "/" + parts[1] + "/" + parts[0];
+  return parts[2]+"/"+parts[1]+"/"+parts[0];
 }
 
 // ======================================
-// 11. PREPARAR PESQUISA
+// 12. PROTEÇÃO DE TEXTO
+// ======================================
+
+function escapeHTML(value){
+
+  return String(value).replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+// ======================================
+// 13. PESQUISA DE PASSAGENS
 // ======================================
 
 document.getElementById("flightForm")
-.addEventListener("submit", event => {
+.addEventListener("submit",event=>{
 
   event.preventDefault();
 
-  const result = document.getElementById("result");
+  const result=document.getElementById("result");
 
-  if (!airportsReady) {
+  if(!airportsReady){
     alert("Aguarde o carregamento dos aeroportos.");
     return;
   }
 
-  if (!selectedOrigin || !selectedDestination) {
-    alert("Digite e selecione os aeroportos nas listas.");
+  if(!selectedOrigin||!selectedDestination){
+    alert("Digite e selecione a origem e o destino na lista.");
     return;
   }
 
-  if (selectedOrigin.iata === selectedDestination.iata) {
-    alert("Origem e destino não podem ser iguais.");
+  if(selectedOrigin.iata===selectedDestination.iata){
+    alert("Origem e destino precisam ser diferentes.");
     return;
   }
 
-  if (!departure.value || departure.value < today) {
-    alert("Selecione uma data de ida válida.");
+  if(!departure.value||departure.value<today){
+    alert("Informe uma data de ida válida.");
     return;
   }
 
-  const oneWay = tripType.value === "oneway";
+  const oneWay=tripType.value==="oneway";
 
-  if (
-    !oneWay &&
-    (!returnDate.value ||
-     returnDate.value < departure.value)
-  ) {
-    alert("Selecione uma data de volta válida.");
+  if(
+    !oneWay&&
+    (!returnDate.value||returnDate.value<departure.value)
+  ){
+    alert("Informe uma data de volta válida.");
     return;
   }
 
-  const passengers =
-    document.getElementById("passengers").value;
+  const passengers=document.getElementById("passengers").value;
+  const travelClass=document.getElementById("travelClass").value;
 
-  const travelClass =
-    document.getElementById("travelClass").value;
-
-  const classNames = {
-    ECONOMY: "Econômica",
-    PREMIUM_ECONOMY: "Econômica Premium",
-    BUSINESS: "Executiva",
-    FIRST: "Primeira classe"
+  const classNames={
+    ECONOMY:"Econômica",
+    PREMIUM_ECONOMY:"Econômica Premium",
+    BUSINESS:"Executiva",
+    FIRST:"Primeira classe"
   };
 
-  const origin = selectedOrigin;
-  const destination = selectedDestination;
+  const origin=selectedOrigin;
+  const destination=selectedDestination;
 
-  let summary = `
+  let html=`
     <h3>Pesquisa preparada com sucesso!</h3>
 
-    <p><strong>Origem:</strong> ${escapeHTML(airportLabel(origin))}, ${escapeHTML(origin.country)}</p>
+    <p><strong>Origem:</strong>
+    ${escapeHTML(airportLabel(origin))},
+    ${escapeHTML(origin.country)}</p>
 
-    <p><strong>Destino:</strong> ${escapeHTML(airportLabel(destination))}, ${escapeHTML(destination.country)}</p>
+    <p><strong>Destino:</strong>
+    ${escapeHTML(airportLabel(destination))},
+    ${escapeHTML(destination.country)}</p>
 
-    <p><strong>Tipo de viagem:</strong>
-    ${oneWay ? "Somente ida" : "Ida e volta"}</p>
+    <p><strong>Tipo:</strong>
+    ${oneWay?"Somente ida":"Ida e volta"}</p>
 
     <p><strong>Data de ida:</strong>
     ${formatDate(departure.value)}</p>
   `;
 
-  if (!oneWay) {
-    summary += `
+  if(!oneWay){
+    html+=`
       <p><strong>Data de volta:</strong>
       ${formatDate(returnDate.value)}</p>
     `;
   }
 
-  summary += `
+  html+=`
     <p><strong>Passageiros:</strong> ${passengers}</p>
-
     <p><strong>Classe:</strong> ${classNames[travelClass]}</p>
-
-    <p><strong>Aeroporto de origem:</strong>
-    ${origin.iata}</p>
-
-    <p><strong>Aeroporto de destino:</strong>
-    ${destination.iata}</p>
 
     <hr>
 
-    <p>Os dados da viagem foram preparados.
-    A consulta de tarifas reais ainda depende
-    da integração com uma API de voos.</p>
+    <p>Os dados da viagem estão preparados.</p>
+    <p>A consulta de preços reais depende da integração
+    com uma API de passagens aéreas.</p>
   `;
 
-  const flightQuery = [
-    "Flights from " + origin.iata,
-    "to " + destination.iata,
-    "on " + departure.value,
-    oneWay ? "" : "returning " + returnDate.value,
-    passengers + " passengers",
+  const flightQuery=[
+    "Flights from "+origin.iata,
+    "to "+destination.iata,
+    "on "+departure.value,
+    oneWay?"":"returning "+returnDate.value,
+    passengers+" passengers",
     classNames[travelClass]
   ].filter(Boolean).join(" ");
 
-  const googleUrl =
-    "https://www.google.com/travel/flights?q=" +
+  const googleURL=
+    "https://www.google.com/travel/flights?q="+
     encodeURIComponent(flightQuery);
 
-  summary += `
+  html+=`
     <p>
-      <a href="${googleUrl}"
+      <a href="${googleURL}"
          target="_blank"
          rel="noopener noreferrer">
-        Consultar opções de voos no Google Flights ↗
+        Consultar voos no Google Flights ↗
       </a>
     </p>
   `;
 
-  result.innerHTML = summary;
-  result.style.display = "block";
+  result.innerHTML=html;
+  result.style.display="block";
 
   result.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
+    behavior:"smooth",
+    block:"nearest"
   });
-
 });
 
 // ======================================
-// 12. SEGURANÇA DE TEXTO
-// ======================================
-
-function escapeHTML(value) {
-
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-
-}
-
-// ======================================
-// 13. INICIAR SISTEMA
+// 14. INICIAR
 // ======================================
 
 loadAirports();
