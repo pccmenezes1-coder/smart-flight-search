@@ -1,47 +1,813 @@
 
-<div>
-  <label for="origin">Origem</label>
-  <input
-    id="origin"
-    type="text"
-    list="airports"
-    placeholder="Digite sua cidade ou aeroporto"
-    autocomplete="off"
-    required
-  >
-</div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Buscador inteligente de passagens aéreas.">
+<title>Smart Flight Search</title>
+<style>
+:root {
+  --navy:#123d70;
+  --blue:#0878d1;
+  --blue-dark:#075fa8;
+  --ink:#18324f;
+  --muted:#63758a;
+  --line:#d5dfeb;
+  --background:#f1f5fb;
+  --danger:#b42318;
+  --shadow:0 14px 36px rgba(20,48,80,.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:var(--background);
+}
+header{
+  background:var(--navy);
+  color:white;
+  padding:20px max(24px,calc((100% - 1320px)/2));
+}
+header h1{margin:0 0 7px;font-size:clamp(24px,3vw,34px)}
+header p{margin:0;font-size:17px}
+.hero{
+  color:white;
+  text-align:center;
+  padding:72px 20px 105px;
+  background:linear-gradient(115deg,#16477f,#0878c9);
+}
+.hero h2{margin:0 0 14px;font-size:clamp(28px,4vw,42px)}
+.hero p{margin:0;font-size:19px}
+main{
+  width:min(1180px,calc(100% - 32px));
+  margin:-65px auto 55px;
+  position:relative;
+}
+.search-card{
+  background:white;
+  border-radius:18px;
+  padding:32px;
+  box-shadow:var(--shadow);
+}
+.search-card h2{margin:0 0 28px;font-size:25px}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 24px;
+}
+.field{min-width:0;position:relative}
+label{display:block;margin-bottom:9px;font-weight:700}
+input,select{
+  width:100%;
+  min-height:54px;
+  padding:13px 15px;
+  border:1px solid #cbd8e7;
+  border-radius:10px;
+  background:white;
+  color:#182b40;
+  font:inherit;
+  font-size:16px;
+  outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(8,120,209,.13);
+}
+.hint{margin:7px 0 0;color:var(--muted);font-size:12px}
+.suggestions{
+  display:none;
+  position:absolute;
+  z-index:20;
+  top:calc(100% + 5px);
+  left:0;
+  right:0;
+  max-height:300px;
+  overflow-y:auto;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:11px;
+  box-shadow:0 12px 28px rgba(20,48,80,.17);
+}
+.suggestions.open{display:block}
+.suggestion{
+  display:block;
+  width:100%;
+  padding:12px 14px;
+  border:0;
+  border-bottom:1px solid #edf1f6;
+  background:white;
+  color:var(--ink);
+  text-align:left;
+  cursor:pointer;
+  font:inherit;
+}
+.suggestion:hover,.suggestion.active{background:#edf6ff}
+.suggestion strong{display:block;font-size:15px}
+.suggestion small{display:block;margin-top:4px;color:var(--muted)}
+.status{
+  display:none;
+  padding:11px 13px;
+  margin:18px 0 0;
+  border-radius:9px;
+  background:#edf6ff;
+  color:#174b78;
+  font-size:14px;
+}
+.status.visible{display:block}
+.status.error{background:#fff0ef;color:var(--danger)}
+.submit-button{
+  width:100%;
+  min-height:58px;
+  margin-top:28px;
+  border:0;
+  border-radius:10px;
+  background:var(--blue);
+  color:white;
+  font:inherit;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+}
+.submit-button:hover{background:var(--blue-dark)}
+.result{
+  display:none;
+  margin-top:22px;
+  padding:20px;
+  border:1px solid #cfe0f1;
+  border-radius:12px;
+  background:#f8fbff;
+}
+.result.visible{display:block}
+.result h3{margin:0 0 12px}
+.result p{margin:7px 0;line-height:1.5}
+.notice{
+  margin:18px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+footer{
+  padding:22px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+@media(max-width:700px){
+  header{padding:18px 20px}
+  .hero{padding:52px 18px 88px}
+  main{width:min(100% - 22px,560px);margin-top:-55px}
+  .search-card{padding:23px 18px}
+  .form-grid{grid-template-columns:1fr;gap:18px}
+  .search-card h2{font-size:21px}
+}
+</style>
+</head>
+<body>
 
-<div>
-  <label for="destination">Destino</label>
-  <input
-    id="destination"
-    type="text"
-    list="airports"
-    placeholder="Digite sua cidade ou aeroporto"
-    autocomplete="off"
-    required
-  >
-</div>
+<header>
+  <h1>✈ SMART FLIGHT SEARCH</h1>
+  <p>Seu buscador inteligente de passagens aéreas</p>
+</header>
 
-<datalist id="airports">
-  <option value="Curitiba (CWB)">
-  <option value="São Paulo (GRU)">
-  <option value="São Paulo (CGH)">
-  <option value="Rio de Janeiro (GIG)">
-  <option value="Rio de Janeiro (SDU)">
-  <option value="Brasília (BSB)">
-  <option value="Belo Horizonte (CNF)">
-  <option value="Porto Alegre (POA)">
-  <option value="Florianópolis (FLN)">
-  <option value="Salvador (SSA)">
-  <option value="Recife (REC)">
-  <option value="Fortaleza (FOR)">
-  <option value="Campinas (VCP)">
-  <option value="Manaus (MAO)">
-  <option value="Belém (BEL)">
-  <option value="Goiânia (GYN)">
-  <option value="Natal (NAT)">
-  <option value="João Pessoa (JPA)">
-  <option value="Maceió (MCZ)">
-  <option value="Foz do Iguaçu (IGU)">
-</datalist>
+<section class="hero">
+  <h2>Encontre sua próxima viagem</h2>
+  <p>Pesquise voos e encontre oportunidades para economizar.</p>
+</section>
+
+<main>
+<section class="search-card">
+  <h2>🔎 Pesquisar passagens aéreas</h2>
+
+  <form id="flightForm" novalidate>
+    <div class="form-grid">
+
+      <div class="field">
+        <label for="origin">Origem</label>
+        <input id="origin" name="origin" type="text"
+          placeholder="Digite cidade, aeroporto ou código (ex.: CWB)"
+          autocomplete="off" aria-autocomplete="list"
+          aria-expanded="false" aria-controls="originSuggestions" required>
+        <div class="suggestions" id="originSuggestions" role="listbox"></div>
+        <p class="hint">Digite pelo menos 2 letras e escolha um aeroporto da lista.</p>
+      </div>
+
+      <div class="field">
+        <label for="destination">Destino</label>
+        <input id="destination" name="destination" type="text"
+          placeholder="Digite cidade, aeroporto ou código (ex.: JFK)"
+          autocomplete="off" aria-autocomplete="list"
+          aria-expanded="false" aria-controls="destinationSuggestions" required>
+        <div class="suggestions" id="destinationSuggestions" role="listbox"></div>
+        <p class="hint">Aeroportos comerciais com serviço aéreo regular.</p>
+      </div>
+
+      <!-- NOVO: TIPO DE VIAGEM -->
+      <div class="field">
+        <label for="tripType">Tipo de viagem</label>
+        <select id="tripType" name="tripType">
+          <option value="roundtrip">Ida e volta</option>
+          <option value="oneway">Somente ida</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="departure">Data de ida</label>
+        <input id="departure" name="departure" type="date" required>
+      </div>
+
+      <!-- DATA DE VOLTA -->
+      <div class="field" id="returnField">
+        <label for="return">Data de volta</label>
+        <input id="return" name="return" type="date">
+      </div>
+
+      <div class="field">
+        <label for="passengers">Passageiros</label>
+        <select id="passengers" name="passengers">
+          <option value="1">1 passageiro</option>
+          <option value="2">2 passageiros</option>
+          <option value="3">3 passageiros</option>
+          <option value="4">4 passageiros</option>
+          <option value="5">5 passageiros</option>
+          <option value="6">6 passageiros</option>
+          <option value="7">7 passageiros</option>
+          <option value="8">8 passageiros</option>
+          <option value="9">9 passageiros</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="class">Classe</label>
+        <select id="class" name="class">
+          <option value="Econômica">Econômica</option>
+          <option value="Econômica Premium">Econômica Premium</option>
+          <option value="Executiva">Executiva</option>
+          <option value="Primeira classe">Primeira classe</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div id="airportStatus" class="status" aria-live="polite"></div>
+
+    <button class="submit-button" id="searchButton" type="submit">
+      Pesquisar passagens ✈
+    </button>
+  </form>
+
+  <section id="result" class="result" aria-live="polite"></section>
+
+  <p class="notice">
+    Os aeroportos são carregados de uma base mundial pública e atualizada
+    pelo OurAirports. Esta versão valida e seleciona aeroportos, mas ainda
+    não consulta tarifas nem disponibilidade em tempo real.
+    A integração com uma API de voos será uma próxima etapa.
+  </p>
+</section>
+</main>
+
+<footer>SMART FLIGHT SEARCH · Projeto em desenvolvimento</footer>
+
+<script>
+const AIRPORTS_URL =
+  "https://davidmegginson.github.io/ourairports-data/airports.csv";
+
+const COUNTRIES_URL =
+  "https://davidmegginson.github.io/ourairports-data/countries.csv";
+
+let airports = [];
+let airportsLoading = null;
+let activeInput = null;
+let activeIndex = -1;
+
+const selectedAirports = {
+  origin:null,
+  destination:null
+};
+
+const $ = id => document.getElementById(id);
+const statusBox = $("airportStatus");
+
+function setStatus(message,isError=false){
+  statusBox.textContent=message;
+  statusBox.className="status visible"+(isError?" error":"");
+}
+
+function clearStatus(){
+  statusBox.textContent="";
+  statusBox.className="status";
+}
+
+// Leitura de CSV respeitando campos entre aspas.
+function parseCSVLine(line){
+  const values=[];
+  let value="";
+  let quoted=false;
+
+  for(let i=0;i<line.length;i++){
+    const char=line[i];
+
+    if(char==='"'){
+      if(quoted&&line[i+1]==='"'){
+        value+='"';
+        i++;
+      }else{
+        quoted=!quoted;
+      }
+    }else if(char===","&&!quoted){
+      values.push(value);
+      value="";
+    }else{
+      value+=char;
+    }
+  }
+
+  values.push(value);
+  return values;
+}
+
+// CARREGAMENTO DA BASE MUNDIAL
+async function loadAirports(){
+  if(airports.length)return airports;
+  if(airportsLoading)return airportsLoading;
+
+  airportsLoading=(async()=>{
+    setStatus("Carregando a lista mundial de aeroportos. Aguarde alguns segundos...");
+
+    try{
+      const [airportResponse,countryResponse]=await Promise.all([
+        fetch(AIRPORTS_URL,{cache:"no-cache"}),
+        fetch(COUNTRIES_URL,{cache:"no-cache"})
+      ]);
+
+      if(!airportResponse.ok||!countryResponse.ok){
+        throw new Error("Não foi possível baixar a base mundial.");
+      }
+
+      const [airportCSV,countryCSV]=await Promise.all([
+        airportResponse.text(),
+        countryResponse.text()
+      ]);
+
+      // Países
+      const countryLines=countryCSV.split(/\r?\n/);
+      const countryHeaders=parseCSVLine(countryLines.shift()||"");
+      const countryCodeIndex=countryHeaders.indexOf("code");
+      const countryNameIndex=countryHeaders.indexOf("name");
+      const countryNames={};
+
+      for(const line of countryLines){
+        if(!line.trim())continue;
+        const row=parseCSVLine(line);
+
+        if(row[countryCodeIndex]){
+          countryNames[row[countryCodeIndex]]=
+            row[countryNameIndex]||row[countryCodeIndex];
+        }
+      }
+
+      // Aeroportos
+      const lines=airportCSV.split(/\r?\n/);
+      const headers=parseCSVLine(lines.shift()||"");
+      const index={};
+
+      headers.forEach((name,i)=>index[name]=i);
+
+      const requiredColumns=[
+        "type","name","municipality","iso_country",
+        "scheduled_service","iata_code","icao_code"
+      ];
+
+      for(const column of requiredColumns){
+        if(index[column]===undefined){
+          throw new Error("Formato da base de aeroportos não reconhecido.");
+        }
+      }
+
+      const found=[];
+
+      for(const line of lines){
+        if(!line.trim())continue;
+
+        const row=parseCSVLine(line);
+        const type=row[index.type];
+        const hasScheduledService=
+          row[index.scheduled_service]==="yes";
+        const iata=(row[index.iata_code]||"").trim();
+
+        if(
+          hasScheduledService&&
+          ["large_airport","medium_airport","small_airport"].includes(type)&&
+          iata
+        ){
+          const countryCode=row[index.iso_country]||"";
+
+          found.push({
+            name:row[index.name]||"",
+            city:row[index.municipality]||row[index.name]||"",
+            country:countryNames[countryCode]||countryCode,
+            countryCode,
+            iata,
+            icao:row[index.icao_code]||"",
+            type
+          });
+        }
+      }
+
+      // Elimina códigos IATA duplicados.
+      const unique=new Map();
+
+      for(const airport of found){
+        if(!unique.has(airport.iata)){
+          unique.set(airport.iata,airport);
+        }
+      }
+
+      airports=Array.from(unique.values()).sort((a,b)=>
+        a.city.localeCompare(b.city)||
+        a.name.localeCompare(b.name)
+      );
+
+      setStatus(
+        "Lista mundial carregada: "+
+        airports.length.toLocaleString("pt-BR")+
+        " aeroportos com serviço regular. Digite uma cidade ou código."
+      );
+
+      return airports;
+
+    }catch(error){
+      console.error(error);
+      setStatus(
+        "Não foi possível carregar a lista mundial. Verifique sua conexão e tente novamente.",
+        true
+      );
+      throw error;
+
+    }finally{
+      airportsLoading=null;
+    }
+  })();
+
+  return airportsLoading;
+}
+
+function normalize(text){
+  return (text||"")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase()
+    .trim();
+}
+
+// PESQUISA DE AEROPORTOS
+function searchAirports(query){
+  const q=normalize(query);
+  if(!q)return [];
+
+  const matches=[];
+
+  for(const airport of airports){
+    const searchable=normalize([
+      airport.city,
+      airport.name,
+      airport.country,
+      airport.countryCode,
+      airport.iata,
+      airport.icao
+    ].join(" "));
+
+    if(searchable.includes(q)){
+      matches.push(airport);
+    }
+
+    if(matches.length>=12)break;
+  }
+
+  return matches;
+}
+
+function closeSuggestions(input){
+  const list=$(input.id+"Suggestions");
+
+  list.classList.remove("open");
+  list.innerHTML="";
+  input.setAttribute("aria-expanded","false");
+
+  if(activeInput===input){
+    activeInput=null;
+    activeIndex=-1;
+  }
+}
+
+function chooseAirport(input,airport){
+  input.value=
+    airport.city+" — "+airport.name+" ("+airport.iata+")";
+
+  selectedAirports[input.id]=airport;
+
+  closeSuggestions(input);
+  clearStatus();
+}
+
+function showSuggestions(input,results){
+  const list=$(input.id+"Suggestions");
+
+  list.innerHTML="";
+  activeInput=input;
+  activeIndex=-1;
+
+  if(!results.length){
+    const empty=document.createElement("div");
+    empty.className="suggestion";
+    empty.textContent=
+      "Nenhum aeroporto encontrado. Tente outra cidade ou código IATA.";
+    list.appendChild(empty);
+  }else{
+    results.forEach(airport=>{
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="suggestion";
+      button.setAttribute("role","option");
+
+      const title=document.createElement("strong");
+      title.textContent=
+        airport.city+" — "+airport.name+" ("+airport.iata+")";
+
+      const detail=document.createElement("small");
+      detail.textContent=
+        airport.country+
+        (airport.icao?" · ICAO "+airport.icao:"");
+
+      button.append(title,detail);
+
+      button.addEventListener("mousedown",event=>{
+        event.preventDefault();
+      });
+
+      button.addEventListener("click",()=>{
+        chooseAirport(input,airport);
+      });
+
+      list.appendChild(button);
+    });
+  }
+
+  list.classList.add("open");
+  input.setAttribute("aria-expanded","true");
+}
+
+async function handleAirportInput(input){
+  selectedAirports[input.id]=null;
+
+  const query=input.value.trim();
+
+  if(query.length<2){
+    closeSuggestions(input);
+    return;
+  }
+
+  try{
+    await loadAirports();
+
+    if(document.activeElement!==input)return;
+
+    const results=searchAirports(input.value.trim());
+    showSuggestions(input,results);
+
+  }catch(_){
+    closeSuggestions(input);
+  }
+}
+
+// EVENTOS DOS CAMPOS DE AEROPORTO
+["origin","destination"].forEach(id=>{
+  const input=$(id);
+
+  input.addEventListener("input",()=>{
+    handleAirportInput(input);
+  });
+
+  input.addEventListener("focus",()=>{
+    if(input.value.trim().length>=2){
+      handleAirportInput(input);
+    }else{
+      loadAirports().catch(()=>{});
+    }
+  });
+
+  input.addEventListener("keydown",event=>{
+    const list=$(id+"Suggestions");
+
+    const options=Array.from(
+      list.querySelectorAll(".suggestion[role='option']")
+    );
+
+    if(!list.classList.contains("open")||!options.length)return;
+
+    if(event.key==="ArrowDown"||event.key==="ArrowUp"){
+      event.preventDefault();
+
+      activeIndex+=event.key==="ArrowDown"?1:-1;
+      activeIndex=Math.max(
+        0,
+        Math.min(activeIndex,options.length-1)
+      );
+
+      options.forEach((option,index)=>{
+        option.classList.toggle("active",index===activeIndex);
+      });
+
+    }else if(event.key==="Enter"&&activeIndex>=0){
+      event.preventDefault();
+      options[activeIndex].click();
+
+    }else if(event.key==="Escape"){
+      closeSuggestions(input);
+    }
+  });
+
+  input.addEventListener("blur",()=>{
+    setTimeout(()=>{
+      closeSuggestions(input);
+    },150);
+  });
+});
+
+document.addEventListener("click",event=>{
+  ["origin","destination"].forEach(id=>{
+    const input=$(id);
+    const list=$(id+"Suggestions");
+
+    if(
+      !input.contains(event.target)&&
+      !list.contains(event.target)
+    ){
+      closeSuggestions(input);
+    }
+  });
+});
+
+// FORMATAÇÃO DAS DATAS
+function formatDate(dateString){
+  if(!dateString)return "Não informada";
+
+  const parts=dateString.split("-");
+
+  return parts.length===3
+    ?parts[2]+"/"+parts[1]+"/"+parts[0]
+    :dateString;
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+// DATAS MÍNIMAS
+const today=new Date();
+
+const localToday=new Date(
+  today.getTime()-today.getTimezoneOffset()*60000
+).toISOString().slice(0,10);
+
+$("departure").min=localToday;
+$("return").min=localToday;
+
+// NOVO: CONTROLE IDA E VOLTA / SOMENTE IDA
+function updateTripType(){
+  const isOneWay=$("tripType").value==="oneway";
+
+  $("returnField").hidden=isOneWay;
+  $("return").disabled=isOneWay;
+
+  if(isOneWay){
+    $("return").value="";
+  }
+}
+
+$("tripType").addEventListener("change",updateTripType);
+updateTripType();
+
+// DATA DE RETORNO NÃO PODE SER ANTERIOR À IDA
+$("departure").addEventListener("change",()=>{
+  $("return").min=$("departure").value||localToday;
+
+  if(
+    $("return").value&&
+    $("return").value<$("departure").value
+  ){
+    $("return").value="";
+  }
+});
+
+// PROCESSAMENTO DA PESQUISA
+$("flightForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  clearStatus();
+
+  const origin=selectedAirports.origin;
+  const destination=selectedAirports.destination;
+  const departure=$("departure").value;
+
+  const isOneWay=$("tripType").value==="oneway";
+
+  const returnDate=isOneWay?"":$("return").value;
+
+  if(!origin||!destination){
+    setStatus(
+      "Escolha a origem e o destino na lista de sugestões. Não basta apenas digitar o nome.",
+      true
+    );
+
+    if(!origin){
+      $("origin").focus();
+    }else{
+      $("destination").focus();
+    }
+
+    return;
+  }
+
+  if(origin.iata===destination.iata){
+    setStatus(
+      "Origem e destino precisam ser aeroportos diferentes.",
+      true
+    );
+    return;
+  }
+
+  if(!departure){
+    setStatus("Informe a data de ida.",true);
+    $("departure").focus();
+    return;
+  }
+
+  if(!isOneWay&&returnDate&&returnDate<departure){
+    setStatus(
+      "A data de volta não pode ser anterior à data de ida.",
+      true
+    );
+    $("return").focus();
+    return;
+  }
+
+  const result=$("result");
+
+  result.innerHTML=`
+    <h3>Pesquisa preparada com sucesso!</h3>
+
+    <p><strong>Origem:</strong>
+    ${escapeHTML(origin.city)} —
+    ${escapeHTML(origin.name)}
+    (${escapeHTML(origin.iata)}),
+    ${escapeHTML(origin.country)}</p>
+
+    <p><strong>Destino:</strong>
+    ${escapeHTML(destination.city)} —
+    ${escapeHTML(destination.name)}
+    (${escapeHTML(destination.iata)}),
+    ${escapeHTML(destination.country)}</p>
+
+    <p><strong>Tipo de viagem:</strong>
+    ${isOneWay?"Somente ida":"Ida e volta"}</p>
+
+    <p><strong>Ida:</strong>
+    ${escapeHTML(formatDate(departure))}</p>
+
+    ${isOneWay?"":`
+      <p><strong>Volta:</strong>
+      ${escapeHTML(formatDate(returnDate))}</p>
+    `}
+
+    <p><strong>Passageiros:</strong>
+    ${escapeHTML($("passengers").value)}</p>
+
+    <p><strong>Classe:</strong>
+    ${escapeHTML($("class").value)}</p>
+
+    <p><strong>Próxima etapa:</strong>
+    conectar uma API de tarifas para consultar preços e disponibilidade reais.</p>
+  `;
+
+  result.classList.add("visible");
+
+  result.scrollIntoView({
+    behavior:"smooth",
+    block:"nearest"
+  });
+});
+
+// CARREGA A BASE MUNDIAL
+loadAirports().catch(()=>{});
+
+</script>
+</body>
+</html>
